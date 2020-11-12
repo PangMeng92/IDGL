@@ -1,0 +1,24 @@
+%%%yale_for_test%%%%
+clc,clear;
+load USPS;
+
+A=fea';
+% A=orth(X);
+b=A(:,1);
+w=10*rand(9298,1);
+n=9298;
+%-----------------------------------------------
+opts.tol = 5e-3; 
+
+opts.rho = 5e-5;
+opts.nonneg = 1;
+
+
+opts.weights = w; 
+% opts.nonorth = 1; 
+%----------------------------------------------
+tic; [x,Out] = yall1(A, b, opts); toc
+relerr = norm(x-xs)/norm(xs);
+fprintf('iter = %4i, error = %e\n',Out.iter,relerr)
+plot(1:n,b,'b-',1:n,x,'r:'); 
+legend('Original','Recovered','location','best')
